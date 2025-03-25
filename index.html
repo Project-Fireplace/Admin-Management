@@ -5,58 +5,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Management</title>
     <style>
+        /* CSS Variables for Theming */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg-color: #CC5500; /* Dark Orange */
+            --header-text-color: #ffffff;
+            --content-text-color: #000000;
+            --toggle-bg: #ccc;
+            --toggle-knob: white;
+            --google-btn-bg: #fff;
+            --google-btn-text: #757575;
+            --google-btn-border: #ccc;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a; /* Dark background */
+            --text-color: #e0e0e0; /* Lighter text */
+            --header-bg-color: #b34c00; /* Slightly darker orange for contrast */
+            --header-text-color: #f0f0f0;
+            --content-text-color: #cccccc;
+            --toggle-bg: #555;
+            --toggle-knob: #ccc;
+            --google-btn-bg: #333; /* Darker button */
+            --google-btn-text: #f1f1f1;
+            --google-btn-border: #555;
+        }
+
+        /* General Styles */
         body {
             font-family: sans-serif;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
         }
 
         header {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            /* Increased vertical padding for taller header */
+            padding: 15px 20px; /* Was 10px 20px */
             display: flex;
             align-items: center;
+            justify-content: space-between;
             width: 100%;
             box-sizing: border-box;
+            transition: background-color 0.3s ease;
         }
 
-        header a {
-            display: flex; /* Use flexbox for the link too, to center the icon and text */
+        .header-left {
+            display: flex;
             align-items: center;
-            text-decoration: none; /* Remove underline from the link */
-            color: white; /* Ensure the link text is white */
+            gap: 15px; /* Space between login button and toggle */
         }
 
-        header img {
-            height: 24px;  /* Adjust size as needed */
-            margin-right: 10px; /* Space between icon and text */
-            /* Optional:  Add a little styling to make the icon look better */
-            border-radius: 50%; /* Make it a circle */
-            border: 2px solid #555; /* Add a subtle border */
+        /* Google Login Button Styling */
+        .google-login-button {
+            background-color: var(--google-btn-bg);
+            color: var(--google-btn-text);
+            border: 1px solid var(--google-btn-border);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            white-space: nowrap;
         }
 
-        header h1 {
+        .google-login-button:hover {
+            opacity: 0.9; /* Slight hover effect */
+        }
+
+        .google-login-button img {
+            height: 18px;
+            width: 18px;
+            margin-right: 8px;
+        }
+
+        /* Dark Mode Toggle Switch Styles */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 20px; /* Slightly smaller height */
+            position: relative;
+            width: 40px; /* Slightly smaller width */
+        }
+        .theme-switch input {
+            display:none; /* Hide default checkbox */
+        }
+        .slider {
+            background-color: var(--toggle-bg);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 20px; /* Rounded track */
+        }
+        .slider:before {
+            background-color: var(--toggle-knob);
+            bottom: 2px; /* Position knob inside track */
+            content: "";
+            height: 16px; /* Knob size */
+            left: 2px; /* Start position */
+            position: absolute;
+            width: 16px; /* Knob size */
+            transition: .4s;
+            border-radius: 50%; /* Circular knob */
+        }
+        input:checked + .slider {
+            background-color: #4CAF50; /* Active color (can also use var if preferred) */
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px); /* Move knob to the right */
+        }
+
+
+        /* Admin Title Link Styling */
+        .admin-title-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--header-text-color);
+            margin-left: 20px; /* Ensure some space if needed */
+            transition: color 0.3s ease;
+        }
+
+        .admin-title-link img {
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+            /* Filter to make SVG potentially adapt slightly in dark mode if needed, e.g. brightness */
+            /* filter: brightness(1); /* Default */
+        }
+        /* Example: Dim icon slightly in dark mode if header text color changes significantly */
+        /* body.dark-mode .admin-title-link img {
+            filter: brightness(0.9);
+        } */
+
+        .admin-title-link h1 {
             margin: 0;
             font-size: 1.5em;
-            /*  No flex-grow needed*/
+            white-space: nowrap;
         }
 
         .content {
             padding: 20px;
+            color: var(--content-text-color); /* Use variable for content text */
+             transition: color 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <header> 
-        <a href="https://project-fireplace.github.io/website">  <!-- Link to the homepage (/) -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/%3E%3C/svg%3E" alt="Admin Icon">
+    <header>
+        <div class="header-left">
+            <!-- Google Login Section -->
+            <button class="google-login-button" onclick="alert('Google Sign-In functionality not yet implemented.');">
+                <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQ4IDQ4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyI+CiAgPHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTI0IDkuNWMzLjU0IDAgNi43MSAxLjIyIDkuMjEgMy42bDYuODUtNi44NUMzNS45IDIuMzggMzAuNDcgMCAyNCAwIDE0LjYyIDAgNi41MSA1LjM4IDIuNTYgMTMuMjJsNy45OCA2LjE5QzEyLjQzIDEzLjcyIDE3Ljc0IDkuNSAyNCA5LjV6Ij48L3BhdGg+CiAgPHBhdGggZmlsbD0iIzQyODVGNCIgZD0iTTQ2Ljk4IDI0LjU1YzAtMS41Ny0uMTUtMy4wOS0uMzgtNC41NUgyNHY5LjAyaDEyLjk0Yy0uNTggMi45Ni0yLjI2IDUuNDgtNC43OCA3LjE4bDcuNzMgNmM0LjUxLTQuMTggNy4wOS0xMC4zNiA3LjA5LTE3LjY1eiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGQkJDMDYiIGQ9Ik0xMC41MyAyOC41OWMtLjQ4LTEuNDUtLjc2LTIuOTktLjc2LTQuNTlzLjI3LTMuMTQuNzYtNC41OWwtNy45OC02LjE5Qy45MiAxNi40NiAwIDIwLjEyIDAgMjRjMCAzLjg4LjkyIDcuNTQgMi41NiAxMC43OGw3Ljk3LTYuMTl6Ij48L3BhdGg+CiAgPHBhdGggZmlsbD0iIzM0QTg1MyIgZD0iTTI0IDQ4YzYuNDggMCAxMS45My0yLjEzIDE1Ljg5LTUuODFsLTcuNzMtNmMtMi4xNSAxLjQ1LTQuOTIgMi4zLTguMTYgMi4zLTYuMjYgMC0xMS41Ny00LjIyLTEzLjQ3LTkuOTFsLTcuOTggNi4xOUM2LjUxIDQyLjYyIDE0LjYyIDQ4IDI0IDQ4eiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoNDh2NDhIMHoiPjwvcGF0aD4KPC9zdmc+" alt="Google logo">
+                Sign in with Google
+            </button>
+
+            <!-- Dark Mode Toggle Switch -->
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="darkModeToggle">
+                    <input type="checkbox" id="darkModeToggle" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Admin Title and Icon (Right Side) -->
+        <a href="https://project-fireplace.github.io/website" class="admin-title-link">
+            <!-- Generic User Icon SVG (Data URI - White Fill) -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Admin Icon">
             <h1>Admin-Management</h1>
         </a>
     </header>
 
     <div class="content">
         <p>If you are a member of staff, admin or moderator please login with your account.</p>
+        <p><small><i>Note: The "Sign in with Google" button is currently a placeholder. Implementing actual Google Sign-In requires further development using Google's identity platform and potentially backend code.</i></small></p>
     </div>
+
+    <script>
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Function to apply the theme
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                toggleSwitch.checked = true;
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                toggleSwitch.checked = false;
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Set initial theme based on localStorage or system preference
+        if (currentTheme) {
+            applyTheme(currentTheme);
+        } else if (prefersDarkScheme.matches) {
+             applyTheme('dark'); // Default to system preference if no localStorage
+        } else {
+             applyTheme('light'); // Default to light otherwise
+        }
+
+        // Listener for toggle switch
+        toggleSwitch.addEventListener('change', function(event) {
+            if (event.target.checked) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+        });
+
+        // (Optional) Listener for changes in system preference
+        prefersDarkScheme.addEventListener('change', (event) => {
+            // Only change if no theme explicitly set by user via toggle
+            if (!localStorage.getItem('theme')) {
+                 applyTheme(event.matches ? 'dark' : 'light');
+            }
+        });
+
+    </script>
 </body>
 </html>
