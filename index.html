@@ -50,13 +50,37 @@
             padding: 15px 20px; /* Was 10px 20px */
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: space-between; /* Keeps items at opposite ends */
             width: 100%;
             box-sizing: border-box;
             transition: background-color 0.3s ease;
         }
 
-        .header-left {
+        /* Admin Title Link Styling (Now on the Left) */
+        .admin-title-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--header-text-color);
+            /* margin-left: 0; Remove margin if previously added */
+            margin-right: 20px; /* Add some space between title and right controls if needed */
+            transition: color 0.3s ease;
+        }
+
+        .admin-title-link img {
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+        }
+
+        .admin-title-link h1 {
+            margin: 0;
+            font-size: 1.5em;
+            white-space: nowrap;
+        }
+
+        /* Container for right-side controls */
+        .header-right {
             display: flex;
             align-items: center;
             gap: 15px; /* Space between login button and toggle */
@@ -132,35 +156,6 @@
             transform: translateX(20px); /* Move knob to the right */
         }
 
-
-        /* Admin Title Link Styling */
-        .admin-title-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--header-text-color);
-            margin-left: 20px; /* Ensure some space if needed */
-            transition: color 0.3s ease;
-        }
-
-        .admin-title-link img {
-            height: 24px;
-            width: 24px;
-            margin-right: 10px;
-            /* Filter to make SVG potentially adapt slightly in dark mode if needed, e.g. brightness */
-            /* filter: brightness(1); /* Default */
-        }
-        /* Example: Dim icon slightly in dark mode if header text color changes significantly */
-        /* body.dark-mode .admin-title-link img {
-            filter: brightness(0.9);
-        } */
-
-        .admin-title-link h1 {
-            margin: 0;
-            font-size: 1.5em;
-            white-space: nowrap;
-        }
-
         .content {
             padding: 20px;
             color: var(--content-text-color); /* Use variable for content text */
@@ -170,7 +165,15 @@
 </head>
 <body>
     <header>
-        <div class="header-left">
+        <!-- Admin Title and Icon (Now on the Left) -->
+        <a href="https://project-fireplace.github.io/website" class="admin-title-link">
+            <!-- Generic User Icon SVG (Data URI - White Fill) -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Admin Icon">
+            <h1>Admin-Management</h1>
+        </a>
+
+        <!-- Right Side Controls Container -->
+        <div class="header-right">
             <!-- Google Login Section -->
             <button class="google-login-button" onclick="alert('Google Sign-In functionality not yet implemented.');">
                 <img src="data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQ4IDQ4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyI+CiAgPHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTI0IDkuNWMzLjU0IDAgNi43MSAxLjIyIDkuMjEgMy42bDYuODUtNi44NUMzNS45IDIuMzggMzAuNDcgMCAyNCAwIDE0LjYyIDAgNi41MSA1LjM4IDIuNTYgMTMuMjJsNy45OCA2LjE5QzEyLjQzIDEzLjcyIDE3Ljc0IDkuNSAyNCA5LjV6Ij48L3BhdGg+CiAgPHBhdGggZmlsbD0iIzQyODVGNCIgZD0iTTQ2Ljk4IDI0LjU1YzAtMS41Ny0uMTUtMy4wOS0uMzgtNC41NUgyNHY5LjAyaDEyLjk0Yy0uNTggMi45Ni0yLjI2IDUuNDgtNC43OCA3LjE4bDcuNzMgNmM0LjUxLTQuMTggNy4wOS0xMC4zNiA3LjA5LTE3LjY1eiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9IiNGQkJDMDYiIGQ9Ik0xMC41MyAyOC41OWMtLjQ4LTEuNDUtLjc2LTIuOTktLjc2LTQuNTlzLjI3LTMuMTQuNzYtNC41OWwtNy45OC02LjE5Qy45MiAxNi40NiAwIDIwLjEyIDAgMjRjMCAzLjg4LjkyIDcuNTQgMi41NiAxMC43OGw3Ljk3LTYuMTl6Ij48L3BhdGg+CiAgPHBhdGggZmlsbD0iIzM0QTg1MyIgZD0iTTI0IDQ4YzYuNDggMCAxMS45My0yLjEzIDE1Ljg5LTUuODFsLTcuNzMtNmMtMi4xNSAxLjQ1LTQuOTIgMi4zLTguMTYgMi4zLTYuMjYgMC0xMS41Ny00LjIyLTEzLjQ3LTkuOTFsLTcuOTggNi4xOUM2LjUxIDQyLjYyIDE0LjYyIDQ4IDI0IDQ4eiI+PC9wYXRoPgogIDxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoNDh2NDhIMHoiPjwvcGF0aD4KPC9zdmc+" alt="Google logo">
@@ -185,18 +188,11 @@
                 </label>
             </div>
         </div>
-
-        <!-- Admin Title and Icon (Right Side) -->
-        <a href="https://project-fireplace.github.io/website" class="admin-title-link">
-            <!-- Generic User Icon SVG (Data URI - White Fill) -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Admin Icon">
-            <h1>Admin-Management</h1>
-        </a>
     </header>
 
     <div class="content">
         <p>If you are a member of staff, admin or moderator please login with your account.</p>
-        <p><small><i>Note: The "Sign in with Google" button is currently a placeholder. Implementing actual Google Sign-In requires further development using Google's identity platform and potentially backend code.</i></small></p>
+        <!-- Removed the note about the placeholder Google button -->
     </div>
 
     <script>
