@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Management</title>
@@ -156,11 +156,21 @@
             transform: translateX(20px); /* Move knob to the right */
         }
 
+        /* --- MODIFIED CONTENT STYLE --- */
         .content {
-            padding: 20px;
+            padding: 40px 20px; /* Added more top/bottom padding for visual spacing */
             color: var(--content-text-color); /* Use variable for content text */
-             transition: color 0.3s ease;
+            transition: color 0.3s ease;
+            text-align: center; /* Center align the content */
         }
+        .content p {
+             font-size: 1.2em; /* Make the paragraph text larger */
+             /* Optionally add line-height for better readability if needed */
+             /* line-height: 1.6; */
+             margin: 0; /* Remove default paragraph margin if centering looks odd */
+        }
+        /* --- END MODIFIED CONTENT STYLE --- */
+
     </style>
 </head>
 <body>
@@ -192,7 +202,7 @@
 
     <div class="content">
         <p>If you are a member of staff, admin or moderator please login with your account.</p>
-        <!-- Removed the note about the placeholder Google button -->
+        <!-- Text is now larger and centered via CSS -->
     </div>
 
     <script>
@@ -234,7 +244,8 @@
         // (Optional) Listener for changes in system preference
         prefersDarkScheme.addEventListener('change', (event) => {
             // Only change if no theme explicitly set by user via toggle
-            if (!localStorage.getItem('theme')) {
+            // Check if 'theme' exists in localStorage. If not, respect system change.
+            if (localStorage.getItem('theme') === null) {
                  applyTheme(event.matches ? 'dark' : 'light');
             }
         });
