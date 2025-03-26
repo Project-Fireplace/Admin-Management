@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Admin Management">
-    <meta name="description" content="admin management">
-    <meta name="keywords" content="manage, admin, management">
+    <meta name="title" content="Admin Management & Blog">
+    <meta name="description" content="admin management and project blog">
+    <meta name="keywords" content="manage, admin, management, blog, project fireplace, news, updates">
     <meta name="author" content="Project Fireplace">
     <meta name="theme-color" content="#121218">
 
-    <title>Admin Management</title>
+    <title>Admin Management & Blog</title>
     <style>
         /* CSS Variables for Theming */
         :root {
@@ -23,19 +23,25 @@
             --google-btn-bg: #fff;
             --google-btn-text: #757575;
             --google-btn-border: #ccc;
+            --box-bg-color: #f9f9f9; /* Light background for the box */
+            --box-text-color: #333333;
+            --box-shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         body.dark-mode {
-            --bg-color: #1a1a1a; /* Dark background */
-            --text-color: #e0e0e0; /* Lighter text */
-            --header-bg-color: #b34c00; /* Slightly darker orange for contrast */
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --header-bg-color: #b34c00;
             --header-text-color: #f0f0f0;
             --content-text-color: #cccccc;
             --toggle-bg: #555;
             --toggle-knob: #ccc;
-            --google-btn-bg: #333; /* Darker button */
+            --google-btn-bg: #333;
             --google-btn-text: #f1f1f1;
             --google-btn-border: #555;
+            --box-bg-color: #2a2a2a; /* Darker background for the box */
+            --box-text-color: #e0e0e0;
+            --box-shadow-color: rgba(255, 255, 255, 0.08); /* Lighter shadow for dark mode */
         }
 
         /* General Styles */
@@ -46,9 +52,9 @@
             box-sizing: border-box;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+            transition: background-color 0.3s ease, color 0.3s ease;
             min-height: 100vh; /* Ensure body takes at least full viewport height */
-            display: flex; /* Use flexbox for potential footer sticking */
+            display: flex; /* Use flexbox for footer sticking */
             flex-direction: column; /* Stack elements vertically */
         }
 
@@ -62,6 +68,7 @@
             width: 100%;
             box-sizing: border-box;
             transition: background-color 0.3s ease;
+            flex-shrink: 0; /* Prevent header from shrinking if content is very small */
         }
 
         /* Admin Title Link Styling */
@@ -90,7 +97,7 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 15px; /* Space between login button and toggle */
         }
 
         /* Google Login Button Styling */
@@ -157,49 +164,80 @@
             border-radius: 50%;
         }
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* Active color */
         }
         input:checked + .slider:before {
-            transform: translateX(20px);
+            transform: translateX(20px); /* Move knob to the right */
         }
 
-        /* --- MODIFIED CONTENT STYLE --- */
+        /* --- CONTENT AREA STYLE --- */
         .content {
-            padding: 40px 20px;
+            padding: 40px 20px; /* Padding around the content area */
             color: var(--content-text-color);
             transition: color 0.3s ease;
-            text-align: center;
-            flex-grow: 1; /* Allows content to push footer down */
+            text-align: center; /* Center content like the box */
+            flex-grow: 1; /* Allows content area to expand and push footer down */
+            display: flex; /* Use flex to center the box */
+            justify-content: center; /* Horizontally center flex items (the box) */
+            align-items: center; /* Vertically center flex items (the box) */
         }
-        .content p {
-             /* font-size: 1.2em; <= Original */
-             font-size: 1.56em; /* Increased by 30% (1.2 * 1.3) */
-             /* line-height: 1.6; */
-             margin: 0;
-        }
-        /* --- END MODIFIED CONTENT STYLE --- */
 
-        /* --- ADDED FOOTER STYLE --- */
-        footer {
-            background-color: var(--header-bg-color); /* Reuse header orange */
-            color: var(--header-text-color);       /* Reuse header text color */
-            padding: 10px 20px;                     /* Vertical/Horizontal padding */
-            text-align: center;                     /* Center the text */
-            width: 100%;                            /* Full width */
-            box-sizing: border-box;                 /* Consistent box model */
-            margin-top: auto; /* Pushes footer to bottom in flex container */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Theme transition */
-            font-size: 0.9em; /* Slightly smaller font for footer */
+        /* --- NEW BLOG BOX STYLE --- */
+        .blog-box {
+            background-color: var(--box-bg-color);
+            color: var(--box-text-color);
+            padding: 30px; /* Padding inside the box */
+            border-radius: 15px; /* Curved corners */
+            max-width: 600px; /* Max width of the box */
+            width: 90%; /* Responsive width */
+            /* margin: 20px auto; removed as flex centering handles this */
+            box-shadow: 0 4px 15px var(--box-shadow-color); /* Subtle shadow */
+            text-align: left; /* Align text left within the box */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover and theme */
         }
-        /* --- END ADDED FOOTER STYLE --- */
+
+        .blog-box:hover {
+            transform: scale(1.05); /* Enlarge the box by 5% */
+            box-shadow: 0 8px 25px var(--box-shadow-color); /* Slightly enhance shadow on hover */
+        }
+
+        .blog-box h2 {
+            font-size: 2em; /* Large title text */
+            margin-top: 0; /* Remove default top margin */
+            margin-bottom: 15px; /* Space below title */
+            color: var(--header-bg-color); /* Use orange for title (optional) */
+            text-align: center; /* Center the title */
+        }
+
+        .blog-box p {
+            font-size: 1em; /* Standard text size */
+            line-height: 1.6; /* Improve readability */
+            margin: 0; /* Remove default paragraph margins */
+        }
+        /* --- END BLOG BOX STYLE --- */
+
+        /* --- FOOTER STYLE --- */
+        footer {
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            /* padding: 10px 20px; <= Original */
+            padding: 15px 20px; /* Increased vertical padding for thickness */
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            /* margin-top: auto; <= Handled by flex-grow on .content */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 0.9em;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+        /* --- END FOOTER STYLE --- */
 
     </style>
 </head>
 <body>
     <header>
-        <!-- Admin Title and Icon (Now on the Left) -->
+        <!-- Admin Title and Icon -->
         <a href="https://project-fireplace.github.io/website" class="admin-title-link">
-            <!-- Generic User Icon SVG (Data URI - White Fill) -->
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Admin Icon">
             <h1>Admin-Management</h1>
         </a>
@@ -223,15 +261,16 @@
     </header>
 
     <div class="content">
-        <p>If you are a member of staff, admin or moderator please login with your account.</p>
-        <!-- Text size adjusted via CSS -->
+         <!-- Centered Blog Box -->
+        <div class="blog-box">
+            <h2>Blog</h2>
+            <p>Welcome to the blog with all our latest news here at Project Fireplace. Get the latest news and secret articles about what upcoming projects we have coming soon.</p>
+        </div>
     </div>
 
-    <!-- ADDED FOOTER ELEMENT -->
     <footer>
         Project Fireplace all rights reserved ©
     </footer>
-    <!-- END ADDED FOOTER ELEMENT -->
 
     <script>
         const toggleSwitch = document.getElementById('darkModeToggle');
@@ -242,11 +281,11 @@
         function applyTheme(theme) {
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-                toggleSwitch.checked = true;
+                if(toggleSwitch) toggleSwitch.checked = true; // Check if element exists
                 localStorage.setItem('theme', 'dark');
             } else {
                 document.body.classList.remove('dark-mode');
-                toggleSwitch.checked = false;
+                if(toggleSwitch) toggleSwitch.checked = false; // Check if element exists
                 localStorage.setItem('theme', 'light');
             }
         }
@@ -260,19 +299,20 @@
              applyTheme('light'); // Default to light otherwise
         }
 
-        // Listener for toggle switch
-        toggleSwitch.addEventListener('change', function(event) {
-            if (event.target.checked) {
-                applyTheme('dark');
-            } else {
-                applyTheme('light');
-            }
-        });
+        // Listener for toggle switch (ensure element exists before adding listener)
+        if (toggleSwitch) {
+            toggleSwitch.addEventListener('change', function(event) {
+                if (event.target.checked) {
+                    applyTheme('dark');
+                } else {
+                    applyTheme('light');
+                }
+            });
+        }
 
         // (Optional) Listener for changes in system preference
         prefersDarkScheme.addEventListener('change', (event) => {
             // Only change if no theme explicitly set by user via toggle
-            // Check if 'theme' exists in localStorage. If not, respect system change.
             if (localStorage.getItem('theme') === null) {
                  applyTheme(event.matches ? 'dark' : 'light');
             }
