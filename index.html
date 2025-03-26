@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="title" content="Admin Management & Blog">
     <meta name="description" content="admin management and project blog">
-    <meta name="keywords" content="manage, admin, management, blog, project fireplace, news, updates">
+    <meta name="keywords" content="manage, admin, management, blog, project fireplace, news, updates, staff login">
     <meta name="author" content="Project Fireplace">
     <meta name="theme-color" content="#121218">
 
@@ -17,13 +17,14 @@
             --text-color: #333333;
             --header-bg-color: #CC5500; /* Dark Orange */
             --header-text-color: #ffffff;
-            --content-text-color: #000000;
+            --content-text-color: #000000; /* Default content text color */
+            --login-prompt-text-color: #555555; /* Specific color for login prompt */
             --toggle-bg: #ccc;
             --toggle-knob: white;
             --google-btn-bg: #fff;
             --google-btn-text: #757575;
             --google-btn-border: #ccc;
-            --box-bg-color: #f9f9f9; /* Light background for the box */
+            --box-bg-color: #f9f9f9;
             --box-text-color: #333333;
             --box-shadow-color: rgba(0, 0, 0, 0.1);
         }
@@ -33,15 +34,16 @@
             --text-color: #e0e0e0;
             --header-bg-color: #b34c00;
             --header-text-color: #f0f0f0;
-            --content-text-color: #cccccc;
+            --content-text-color: #cccccc; /* Default content text color (dark mode) */
+            --login-prompt-text-color: #aaaaaa; /* Specific color for login prompt (dark mode) */
             --toggle-bg: #555;
             --toggle-knob: #ccc;
             --google-btn-bg: #333;
             --google-btn-text: #f1f1f1;
             --google-btn-border: #555;
-            --box-bg-color: #2a2a2a; /* Darker background for the box */
+            --box-bg-color: #2a2a2a;
             --box-text-color: #e0e0e0;
-            --box-shadow-color: rgba(255, 255, 255, 0.08); /* Lighter shadow for dark mode */
+            --box-shadow-color: rgba(255, 255, 255, 0.08);
         }
 
         /* General Styles */
@@ -53,9 +55,9 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
-            min-height: 100vh; /* Ensure body takes at least full viewport height */
-            display: flex; /* Use flexbox for footer sticking */
-            flex-direction: column; /* Stack elements vertically */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -68,7 +70,7 @@
             width: 100%;
             box-sizing: border-box;
             transition: background-color 0.3s ease;
-            flex-shrink: 0; /* Prevent header from shrinking if content is very small */
+            flex-shrink: 0;
         }
 
         /* Admin Title Link Styling */
@@ -97,7 +99,7 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between login button and toggle */
+            gap: 15px;
         }
 
         /* Google Login Button Styling */
@@ -164,55 +166,68 @@
             border-radius: 50%;
         }
         input:checked + .slider {
-            background-color: #4CAF50; /* Active color */
+            background-color: #4CAF50;
         }
         input:checked + .slider:before {
-            transform: translateX(20px); /* Move knob to the right */
+            transform: translateX(20px);
         }
 
         /* --- CONTENT AREA STYLE --- */
         .content {
-            padding: 40px 20px; /* Padding around the content area */
-            color: var(--content-text-color);
+            padding: 40px 20px;
+            /* color: var(--content-text-color); NO - Use specific colors below */
             transition: color 0.3s ease;
-            text-align: center; /* Center content like the box */
-            flex-grow: 1; /* Allows content area to expand and push footer down */
-            display: flex; /* Use flex to center the box */
-            justify-content: center; /* Horizontally center flex items (the box) */
-            align-items: center; /* Vertically center flex items (the box) */
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center the group vertically */
+            align-items: center; /* Center items horizontally */
+            gap: 30px; /* Space between login prompt and blog box */
         }
 
-        /* --- NEW BLOG BOX STYLE --- */
+        /* --- LOGIN PROMPT STYLE --- */
+        .login-prompt {
+            font-size: 1.1em; /* Slightly smaller than blog text */
+            color: var(--login-prompt-text-color); /* Use specific variable */
+            margin: 0; /* Reset default margin */
+            max-width: 700px; /* Match blog box width for alignment */
+            width: 90%;
+            line-height: 1.5;
+        }
+
+
+        /* --- BLOG BOX STYLE --- */
         .blog-box {
             background-color: var(--box-bg-color);
             color: var(--box-text-color);
-            padding: 30px; /* Padding inside the box */
-            border-radius: 15px; /* Curved corners */
-            max-width: 600px; /* Max width of the box */
-            width: 90%; /* Responsive width */
-            /* margin: 20px auto; removed as flex centering handles this */
-            box-shadow: 0 4px 15px var(--box-shadow-color); /* Subtle shadow */
-            text-align: left; /* Align text left within the box */
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transition for hover and theme */
+            padding: 30px;
+            border-radius: 15px;
+            /* max-width: 600px; <= Original */
+            max-width: 700px; /* Made slightly larger */
+            width: 90%;
+            box-shadow: 0 4px 15px var(--box-shadow-color);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
 
         .blog-box:hover {
-            transform: scale(1.05); /* Enlarge the box by 5% */
-            box-shadow: 0 8px 25px var(--box-shadow-color); /* Slightly enhance shadow on hover */
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px var(--box-shadow-color);
         }
 
         .blog-box h2 {
-            font-size: 2em; /* Large title text */
-            margin-top: 0; /* Remove default top margin */
-            margin-bottom: 15px; /* Space below title */
-            color: var(--header-bg-color); /* Use orange for title (optional) */
-            text-align: center; /* Center the title */
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--header-bg-color);
+            text-align: center;
         }
 
         .blog-box p {
-            font-size: 1em; /* Standard text size */
-            line-height: 1.6; /* Improve readability */
-            margin: 0; /* Remove default paragraph margins */
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 0;
         }
         /* --- END BLOG BOX STYLE --- */
 
@@ -220,15 +235,13 @@
         footer {
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
-            /* padding: 10px 20px; <= Original */
-            padding: 15px 20px; /* Increased vertical padding for thickness */
+            padding: 15px 20px; /* Thicker footer */
             text-align: center;
             width: 100%;
             box-sizing: border-box;
-            /* margin-top: auto; <= Handled by flex-grow on .content */
             transition: background-color 0.3s ease, color 0.3s ease;
             font-size: 0.9em;
-            flex-shrink: 0; /* Prevent footer from shrinking */
+            flex-shrink: 0;
         }
         /* --- END FOOTER STYLE --- */
 
@@ -261,7 +274,10 @@
     </header>
 
     <div class="content">
-         <!-- Centered Blog Box -->
+        <!-- Added Login Prompt Text -->
+        <p class="login-prompt">If you are a member of staff, admin or moderator please login with your account.</p>
+
+        <!-- Centered and Slightly Larger Blog Box -->
         <div class="blog-box">
             <h2>Blog</h2>
             <p>Welcome to the blog with all our latest news here at Project Fireplace. Get the latest news and secret articles about what upcoming projects we have coming soon.</p>
@@ -281,38 +297,33 @@
         function applyTheme(theme) {
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-                if(toggleSwitch) toggleSwitch.checked = true; // Check if element exists
+                if(toggleSwitch) toggleSwitch.checked = true;
                 localStorage.setItem('theme', 'dark');
             } else {
                 document.body.classList.remove('dark-mode');
-                if(toggleSwitch) toggleSwitch.checked = false; // Check if element exists
+                if(toggleSwitch) toggleSwitch.checked = false;
                 localStorage.setItem('theme', 'light');
             }
         }
 
-        // Set initial theme based on localStorage or system preference
+        // Set initial theme
         if (currentTheme) {
             applyTheme(currentTheme);
         } else if (prefersDarkScheme.matches) {
-             applyTheme('dark'); // Default to system preference if no localStorage
+             applyTheme('dark');
         } else {
-             applyTheme('light'); // Default to light otherwise
+             applyTheme('light');
         }
 
-        // Listener for toggle switch (ensure element exists before adding listener)
+        // Listener for toggle switch
         if (toggleSwitch) {
             toggleSwitch.addEventListener('change', function(event) {
-                if (event.target.checked) {
-                    applyTheme('dark');
-                } else {
-                    applyTheme('light');
-                }
+                applyTheme(event.target.checked ? 'dark' : 'light');
             });
         }
 
-        // (Optional) Listener for changes in system preference
+        // Listener for system preference changes
         prefersDarkScheme.addEventListener('change', (event) => {
-            // Only change if no theme explicitly set by user via toggle
             if (localStorage.getItem('theme') === null) {
                  applyTheme(event.matches ? 'dark' : 'light');
             }
