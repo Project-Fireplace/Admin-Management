@@ -175,25 +175,25 @@
         /* --- CONTENT AREA STYLE --- */
         .content {
             padding: 40px 20px;
-            /* color: var(--content-text-color); NO - Use specific colors below */
             transition: color 0.3s ease;
             text-align: center;
             flex-grow: 1;
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            justify-content: center; /* Center the group vertically */
-            align-items: center; /* Center items horizontally */
-            gap: 30px; /* Space between login prompt and blog box */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
         }
 
         /* --- LOGIN PROMPT STYLE --- */
         .login-prompt {
-            font-size: 1.1em; /* Slightly smaller than blog text */
-            color: var(--login-prompt-text-color); /* Use specific variable */
-            margin: 0; /* Reset default margin */
-            max-width: 700px; /* Match blog box width for alignment */
+            font-size: 1.1em;
+            color: var(--login-prompt-text-color);
+            margin: 0;
+            max-width: 700px;
             width: 90%;
             line-height: 1.5;
+            transition: color 0.3s ease; /* Add transition for theme change */
         }
 
 
@@ -203,8 +203,7 @@
             color: var(--box-text-color);
             padding: 30px;
             border-radius: 15px;
-            /* max-width: 600px; <= Original */
-            max-width: 700px; /* Made slightly larger */
+            max-width: 700px;
             width: 90%;
             box-shadow: 0 4px 15px var(--box-shadow-color);
             text-align: left;
@@ -220,9 +219,23 @@
             font-size: 2em;
             margin-top: 0;
             margin-bottom: 15px;
-            color: var(--header-bg-color);
+            /* color: var(--header-bg-color); REMOVED - Color handled by link */
             text-align: center;
         }
+
+        /* --- Style the Link within H2 --- */
+        .blog-box h2 a {
+            color: var(--header-bg-color); /* Apply orange color */
+            text-decoration: none; /* Remove underline */
+            transition: opacity 0.2s ease; /* Add subtle hover effect */
+        }
+
+        .blog-box h2 a:hover {
+            opacity: 0.8; /* Slightly fade on hover */
+            text-decoration: underline; /* Optional: Add underline on hover */
+        }
+        /* --- End Link Style --- */
+
 
         .blog-box p {
             font-size: 1em;
@@ -235,7 +248,7 @@
         footer {
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
-            padding: 15px 20px; /* Thicker footer */
+            padding: 15px 20px;
             text-align: center;
             width: 100%;
             box-sizing: border-box;
@@ -274,12 +287,15 @@
     </header>
 
     <div class="content">
-        <!-- Added Login Prompt Text -->
+        <!-- Login Prompt Text -->
         <p class="login-prompt">If you are a member of staff, admin or moderator please login with your account.</p>
 
-        <!-- Centered and Slightly Larger Blog Box -->
+        <!-- Blog Box -->
         <div class="blog-box">
-            <h2>Blog</h2>
+             <!-- Added link around H2 -->
+            <h2>
+                <a href="https://project-fireplace.github.io/Fireplace-Blog/" target="_blank" rel="noopener noreferrer">Blog</a>
+            </h2>
             <p>Welcome to the blog with all our latest news here at Project Fireplace. Get the latest news and secret articles about what upcoming projects we have coming soon.</p>
         </div>
     </div>
